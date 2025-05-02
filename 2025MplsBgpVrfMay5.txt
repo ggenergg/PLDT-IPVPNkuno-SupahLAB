@@ -350,21 +350,21 @@ ip vrf clientBSPa
 ***
 R1:pez
 config t
- ip vrf clientBDOb
-  rd 999:1
-  route-target 64999:1
- ip vrf clientBPIb
-  rd 999:2
-  route-target 64999:2
- ip vrf clientPNBb
-  rd 999:3
-  route-target 64999:3
-ip vrf clientBPOb
-  rd 888:4
-  route-target 69666:4
-ip vrf clientBSPb
-  rd 888:5
-  route-target 69666:5
+ ip vrf __________
+  __________
+  __________
+ ip vrf __________
+  __________
+  __________
+ ip vrf __________
+  __________
+  __________
+ip vrf __________
+  __________
+  __________
+ip vrf __________
+  __________
+  __________
   end
   
   
@@ -763,4 +763,4 @@ _____ ___
   __ ____________
   ____ __ _ _ _
 
-!in the other BSP must ping...
+!in the other BSP must ping upon configured...
