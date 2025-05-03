@@ -218,15 +218,15 @@ end
 ***
 R2:PcoreB:
 config t
- ip cef
- mpls ip
-  int Ethernet1/1
-    mpls ip
-    mpls label protocol ldp
-    !mpls mtu override 1512
-  int Ethernet1/2
-    mpls ip
-    mpls label protocol ldp
+ __ ___
+ ____ __
+  int __________
+    ____ __
+    ____ _____ _______ ___
+    !mpls mtu override 1512 (apply only in most real devices)
+  int  __________
+    ____ __
+    ____ _____ _______ ___
     ! mpls mtu override 1512 (apply only in most real devices)
 	end
 	
