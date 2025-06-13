@@ -195,7 +195,7 @@ config t
   int Ethernet1/2
     mpls ip
     mpls label protocol ldp
-	mpls mtu override 1512 
+	!mpls mtu override 1512 
     end
 
 ***
@@ -211,7 +211,7 @@ config t
   int Ethernet1/2
     mpls ip
     mpls label protocol ldp
-	mpls mtu override 1512
+	!mpls mtu override 1512
 end
 
 ****
@@ -227,7 +227,7 @@ config t
   int Ethernet1/2
     mpls ip
     mpls label protocol ldp
-	mpls mtu override 1512
+	!mpls mtu override 1512
 	end
 
 
@@ -241,7 +241,7 @@ config t
   int Ethernet1/0
     mpls ip
     mpls label protocol ldp
-	mpls mtu override 1512
+	!mpls mtu override 1512
 	end
 
 
