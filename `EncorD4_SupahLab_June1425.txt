@@ -9,7 +9,7 @@ PNB-A : BPI-A : PE-A : PCore-A : PCore-B : PE-Z : BPI-B : PNB-B
 
 MPLS supah lab:
 
-R4-PEa:
+PE-A:
 enable
 configure terminal
 ! hostname R4-PEa
@@ -26,7 +26,7 @@ end
 
 ***
 
-R3-Pcore-A:
+PCore-A:
 enable
 configure terminal
 ! hostname R3-PCoreA
@@ -57,7 +57,7 @@ end
 
 ****
 
-R1PEz:
+PE-Z:
 enable
 configure terminal
 ! hostname R1-PEz
@@ -74,7 +74,7 @@ end
 
 ***
 
-D1-pnbA:
+PNB-Alabang:
 enable
 configure terminal
 ! hostname D1-PNBalabang
@@ -94,7 +94,7 @@ end
 
 ***
 
-isp1-pnbB:
+PNB-BGC:
 enable
 configure terminal
 ! hostname PNBbgc
@@ -112,7 +112,7 @@ end
 
 ***
 
-D2-BPIa:
+BPI-Alabang:
 enable
 configure terminal
 ! hostname D2-BPIa
@@ -127,7 +127,7 @@ end
 
 ***
 
-ISp2-BPIB:
+BPI-BGC:
 configure terminal
 ! hostname I2BPIb
  enable secret pass
@@ -147,7 +147,7 @@ end
 Step0: Enable Basic OSPF routing on Core:
 !locally common OSPF but preferrably like in some other countries is using IS-IS
 
-R4-Pea
+PE-A:
 config t
  no router ospf 1
  router ospf 1
@@ -155,7 +155,7 @@ config t
   network 10.1.1.8 0.0.0.3 area 0
 end
 
-R3-PCoreA
+PCore-A:
 config t
  no router ospf 1
  router ospf 1
@@ -164,7 +164,7 @@ config t
   network 10.1.1.4 0.0.0.3 area 0
 end
 
-R2-PCoreb
+PCore-B:
 config t
  no router ospf 1
  router ospf 1
@@ -173,7 +173,7 @@ config t
   network 10.1.1.4 0.0.0.3 area 0
 end
 
-R1:Pez
+PE-Z:
 config t
  no router ospf 1
  router ospf 1
@@ -188,7 +188,7 @@ STEP1: BASIC MPLS CONFIGURATION AT TELCO core:
         datacenter eng/core/wan/telco eng.
           highly paid syet!
 
-R4:PEa
+PE-A:
 config t
  ip cef
  mpls ip
@@ -200,7 +200,7 @@ config t
 	
 ***
 
-R3:PcoreA:
+PCore-A:
 config t
  ip cef
  mpls ip
@@ -216,7 +216,8 @@ end
 
 ****
 ***
-R2:PcoreB:
+
+PCore-B:
 config t
  __ ___
  ____ __
@@ -234,7 +235,7 @@ config t
 ****
 
 
-R1-1:PEz
+PE-Z:
 config t
  ip cef
  mpls ip
@@ -246,7 +247,7 @@ config t
 
 
 How to check: (at PCore-B)
-R2P#show mpls ldp neighbor  !(lib)
+PCore-B# show mpls ldp neighbor  !(lib)
         Peer LDP Ident: 172.16.1.3:0; Local LDP Ident 172.16.1.2:0
         TCP connection: 172.16.1.3.11463 - 172.16.1.2.646
         State: Oper; Msgs sent/rcvd: 10/10; Downstream
@@ -266,7 +267,7 @@ R2P#show mpls ldp neighbor  !(lib)
           172.16.1.1 
 
 
-r2P#show mpls forwarding-table !(fib)
+PCore-B# show mpls forwarding-table !(fib)
 Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
 Label      Label      or Tunnel Id     Switched      interface              
 16         Pop Label  10.1.1.8/30      0             Et1/1      10.1.1.6    
@@ -275,7 +276,7 @@ Label      Label      or Tunnel Id     Switched      interface
 19         19         172.16.1.4/32    0             Et1/1      10.1.1.6    
 
 
-r2P#show mpls ldp bindings !(lfib)
+PCore-B# show mpls ldp bindings !(lfib)
   lib entry: 10.1.1.0/30, rev 2
         local binding:  label: imp-null
         remote binding: lsr: 172.16.1.3:0, label: 16
@@ -307,7 +308,7 @@ r2P#show mpls ldp bindings !(lfib)
 		
 		
 
-r2P#show ip route !(routing table)
+PCore-B# show ip route !(routing table)
       10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
 C        10.1.1.0/30 is directly connected, Ethernet1/2
 L        10.1.1.2/32 is directly connected, Ethernet1/2
@@ -328,7 +329,7 @@ STEP2: VRF CONFIGURATION:
   virtual route forwarder: "Virtual/logical Router"
   allows you to have overlapping VPN networks
 
-R4:PE_a
+PE-A:
 config t
  ip vrf clientBDOa
    rd 999:1
@@ -348,7 +349,7 @@ ip vrf clientBSPa
    end
    
 ***
-R1:pez
+PE-Z:
 config t
  ip vrf __________
   __________
@@ -370,7 +371,7 @@ ip vrf __________
   
 **********
 
-R4-PEa#show ip vrf
+PE-A# show ip vrf
   Name                             Default RD            Interfaces
   clientBDOa                       999:1                 
   clientBPIa                       999:2                 
@@ -378,7 +379,7 @@ R4-PEa#show ip vrf
   clientBSPa                       888:5                 
   clientPNBa                       999:3              
 
-R1-PEz#show ip vrf
+PE-Z# show ip vrf
   Name                             Default RD            Interfaces
   clientBDOb                       999:1                 
   clientBPIb                       999:2                 
@@ -389,7 +390,7 @@ R1-PEz#show ip vrf
 
 STEP3: CONFIGURING VRF INTERFACES ON PE ROUTERS:
 
-R4:PEa
+PE-A:
 config t
  int Ethernet1/1
    ip vrf forwarding clientBPIa
@@ -411,7 +412,7 @@ end
 
 ***
 
-R1:PEz: 
+PE-Z: 
 config t
  int Ethernet1/2
   ip vrf forwarding clientBPIb
@@ -431,7 +432,7 @@ config t
   no shut
 end
 
-R1-PEz#bp
+PE-Z# bp
 Interface                  IP-Address      OK? Method Status                Protocol
 Ethernet0/0                10.1.1.6        YES manual up                    up      
 Ethernet0/1                10.1.1.6        YES manual up                    up      
@@ -454,7 +455,7 @@ STEP 4: MP-BGP configuration MultiProtocol BGP
 BGP (handles 32bits:normal packet) 
 vs mBGP(multi Protocol BGP = 96bits= 32 + 64bits RD)
 
-R4:PEa
+PE-A:
 config t
  no router bgp 64999
  router bgp 64999
@@ -472,7 +473,7 @@ end
  
  
 
-R1:PEz peering with Lo of R2!
+PE-Z: peering with Lo of R2!
 config t
  no router bgp 64999
  router bgp 64999
@@ -515,7 +516,7 @@ STEP5: INDIVIDUAL VIRTUAL/LOGICAL ROUTER VRF CONFIGURATION.
 
 
 LOGICAL ROUTER OF PNB = clientPNBa/b
-R4:PEa
+PE-A:
 config t
  router eigrp 90
   address-family ipv4 vrf clientPNBa
@@ -526,7 +527,7 @@ config t
   
 ***
 
-R1:PeZ:
+PE-Z:
 config t
   router eigrp 90
    address-family ipv4 vrf clientPNBb
@@ -538,7 +539,7 @@ config t
 
  
 LOGICAL ROUTER OF BPI = clientBPIa/b
-R4:PEa
+PE-A:
 config t
  router ospf 69 vrf clientBPIa
  network 0.0.0.0 0.0.0.0 area 0
@@ -546,7 +547,7 @@ end
  
 ***
 
-R1-:PeZ
+PE-Z:
 config t
  router ospf 69 vrf clientBPIb
   network 0.0.0.0 0.0.0.0 area 0
@@ -560,7 +561,7 @@ RIP - mBGP-RIP/EIGRP-mBGP -EIGRP/OSPF - mBGP -OSPF/
 
 7.2:EIGRP-mBGP -EIGRP
 
-R4:PEa
+PE-A:
 config t
  router bgp 64999
   address-family ipv4 vrf clientPNBa
@@ -578,7 +579,7 @@ end
 
 
 ***
-R1:PEz
+PE-Z:
 config t
  router bgp 64999
   address-family ipv4 vrf clientPNBb
@@ -596,7 +597,7 @@ end
 
 
 OSPF - mBGP -OSPF
-R4:PEa
+PE-A:
 config t
  router bgp 64999
   address-family ipv4 vrf clientBPIa
@@ -611,7 +612,7 @@ end
 
 ***
 
-R1:PEz
+PE-Z:
 config t
  router bgp 64999
   address-family ipv4 vrf clientBPIb
@@ -680,7 +681,8 @@ end
 ********************************
 
 EXTRA: SOME NETWORKS/CLIENTS ARE USING RIP VERSION 2:
-PE-A
+
+PE-A:
 config t
  router rip
   version 2
@@ -695,7 +697,7 @@ config t
 
 ***
 
-PE-Z
+PE-Z:
 config t
  router rip
   version 2
@@ -711,7 +713,7 @@ config t
 route Redistribution between RIP and BGP(vice versa)
 route Redistribution between RIP and BGP(vice versa)
 
-PE-A
+PE-A:
 config t
  router bgp 64999
   address-family ipv4 vrf clientBSPa
@@ -729,7 +731,7 @@ config t
 
 ***
 
-PE-Z
+PE-Z:
 config t
  router bgp 64999
   address-family ipv4 vrf clientBSPb
@@ -756,11 +758,11 @@ end
 !FOR TESTING:   (can you figure out???)
 @BSP-A/B       !(other BSP must not ping prior to configuring)
 conf t
-___ __ __
+int lo 69
 __ ___ __ _ _ _ ___ ___ ___ ___
 _____ ___
   _______ _
   __ ____________
   ____ __ _ _ _
-
+end
 !in the other BSP must ping upon configured...
