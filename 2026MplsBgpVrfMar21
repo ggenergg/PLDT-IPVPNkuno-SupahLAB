@@ -710,7 +710,7 @@ config t
    network 10.0.0.0
    no auto-summary
 
-route Redistribution between RIP and BGP(vice versa)
+ 
 route Redistribution between RIP and BGP(vice versa)
 
 PE-A:
@@ -756,7 +756,7 @@ config t
 end
 
 !FOR TESTING:   (can you figure out???)
-@BSP-A/B       !(other BSP must not ping prior to configuring)
+@ either BSP-A or B       !(other BSP must not ping prior to configuring)
 conf t
 int lo 69
 ip add 69.0.0.1 255.255.255.255
