@@ -477,16 +477,16 @@ PE-Z: peering with Lo of R2!
 config t
  no router bgp 64999
  router bgp 64999
-  no bgp default ipv4-unicast
-  !disables IPv4 routing to handle VPN routes
+  no bgp default ipv4-unicast		!Prevents BGP from automatically creating an IPv4 session for every neighbor. 
+ 	 !disables IPv4 routing to handle VPN routes, in an MPLS environment, we often want to exchange VPN labels rather than standard Internet routes.
   neighbor 172.16.1.4 remote-as 64999
   neighbor 172.16.1.4 update-source lo0
   !standard BGP config, but wont run (-:
-  address-family vpnv4
+  address-family vpnv4					!specific mode for VPNv4 used to carry clients' VRF traffic.
   neighbor 172.16.1.4 activate
-  neighbor 172.16.1.4 send-community both
-  exit-address-family
-  !activate the neigbor and exchange vpnv4 routes(32+64)
+  neighbor 172.16.1.4 send-community both		!carry the Route Target (RT) used to identify which VPN the route belongs to.
+  exit-address-family							
+  		!activate the neigbor and exchange vpnv4 routes(32+64)
 end
 
 !This should be good.
